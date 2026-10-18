@@ -3,7 +3,7 @@
 
 const SUPABASE_URL = 'https://ahatbnwqcozjzxehcnjc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_NFltu0VR5bo6K097P6-gSw_XWxnPLVl';
-const MPESA_API_BASE = 'https://scratchke-api.sunrisekenya3.workers.dev';
+const MPESA_API_BASE = 'https://scratchke-backend.netlify.app';
 const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
 const cards = {
   Bronze: { cost: 20, max: 100, prizes: [0, 0, 10, 20, 30, 50, 100], tier: 'bronze', ticketStyle: 'ticket-red', icon: '🎁', description: 'A colourful digital scratch ticket.' },
