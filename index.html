@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071a12">
+  <meta name="description" content="ScratchKE virtual scratch-card demo.">
+  <title>ScratchKE — Scratch. Reveal.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a id="brandHome" class="brand" href="#top" aria-label="ScratchKE home">
+      <b class="brand-mark">S</b>
+      <span><strong>ScratchKE</strong><small>Digital scratch-card demo</small></span>
+    </a>
+    <div class="header-actions">
+      <span id="userName" class="user-name hidden"></span>
+      <button id="logout" class="ghost-btn hidden" type="button">Logout</button>
+      <button id="adminDashboardBtn" class="login-btn hidden" type="button">Admin dashboard</button>
+      <button id="loginOpenBtn" class="login-btn" type="button">Login / Register</button>
+      <span class="demo-badge">DEMO MODE</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="dashboard-strip page-width" aria-label="Account overview">
+      <details class="account-menu" id="walletDropdown">
+        <summary><span>Account &amp; stats</span><span aria-hidden="true">⌄</span></summary>
+        <div class="account-menu-content">
+          <div class="stats compact-stats" aria-label="Demo statistics">
+            <div class="stat-card"><span>Tickets played</span><b id="played">0</b></div>
+            <div class="stat-card"><span>Demo prizes</span><b id="won">KSh 0</b></div>
+            <div class="stat-card"><span>Best prize</span><b id="best">KSh 0</b></div>
+          </div>
+          <details class="wallet-dropdown" id="walletActionsDropdown">
+            <summary>Wallet actions <span>⌄</span></summary>
+            <div class="wallet-panel wallet-action-list">
+              <details class="wallet-action-dropdown" id="depositDropdown">
+                <summary><span>Deposit</span><span aria-hidden="true">＋</span></summary>
+                <div class="wallet-action-content">
+                  <label for="depositAmount">Amount (KSh)</label>
+                  <input type="number" id="depositAmount" min="10" step="10" inputmode="numeric" placeholder="e.g. 100">
+<label for="depositPhone">M-Pesa phone number</label>
+<input type="tel" id="depositPhone" inputmode="tel" autocomplete="tel" placeholder="e.g. 0712345678">
+ <button id="depositBtn" type="button" class="secondary-btn full-width">Pay with M-Pesa (Sandbox)</button>
+<p class="wallet-disclaimer">Sandbox testing only. No real money should be used.</p>
+                </div>
+              </details>
+              <details class="wallet-action-dropdown" id="withdrawDropdown">
+                <summary><span>Withdraw</span><span aria-hidden="true">−</span></summary>
+                <div class="wallet-action-content">
+                  <label for="withdrawAmount">Amount (KSh)</label>
+                  <input type="number" id="withdrawAmount" min="1" step="1" inputmode="numeric" placeholder="e.g. 100">
+                  <button id="withdrawBtn" type="button" class="secondary-btn full-width">Remove demo credits</button>
+                  <p class="wallet-disclaimer">Demo only. No money is sent to M-Pesa.</p>
+                </div>
+              </details>
+              <p id="walletMessage" class="inline-message" aria-live="polite"></p>
+            </div>
+          </details>
+          <button id="reset" class="reset-btn" type="button">Reset demo account</button>
+        </div>
+      </details>
+
+      <aside class="wallet-card balance-card" id="walletCard">
+        <div class="wallet-label">YOUR ACCOUNT BALANCE</div>
+        <strong id="balance">KSh 500</strong>
+        <p id="walletHint">Log in to access your demo wallet.</p>
+      </aside>
+    </section>
+
+    <section class="cards-section page-width">
+      <div class="section-heading">
+        <div><label class="eyebrow">CHOOSE A CARD</label><h2>Scratch cards</h2><p>Choose a card to see its demo price and prize range.</p></div>
+        <div class="pool-indicator"><span>Available demo prize pool</span><strong id="availablePool">KSh 0</strong><span class="virtual-tag">Virtual credits only</span></div>
+      </div>
+      <div id="cards" class="cards-grid" aria-live="polite"></div>
+      <p id="cardNotice" class="card-notice">You can browse cards without an account. Log in or register to play.</p>
+    </section>
+
+    <section class="activity-section page-width">
+      <div class="section-heading"><div><label class="eyebrow">ACTIVITY</label><h2>Recent plays</h2></div></div>
+      <div id="history" class="activity-list"><p class="empty-state">Log in to view your play history.</p></div>
+    </section>
+  </main>
+
+  <section id="adminDashboard" class="admin-section page-width hidden" aria-labelledby="adminHeading">
+    <div class="admin-heading-row">
+      <div><label class="eyebrow">PRIVATE ADMIN AREA</label><h2 id="adminHeading">ScratchKE dashboard</h2><p>Open each function in its own page using the navigation below.</p></div>
+      <button id="adminRefreshBtn" class="secondary-btn" type="button">Refresh data</button>
+    </div>
+    <div class="admin-notice"><strong>Manual records only.</strong> Recording or verifying a receipt does not add funds to a wallet or initiate an M-Pesa payment or payout.</div>
+    <div class="admin-nav-dropdown">
+      <label for="adminPageSelect">Choose dashboard function</label>
+      <select id="adminPageSelect" aria-label="Choose dashboard function">
+        <option value="overview" selected>Overview</option>
+        <option value="users">Registered users</option>
+        <option value="plays">Play records</option>
+        <option value="transactions">Transactions</option>
+        <option value="funding">Funding records</option>
+        <option value="receipt">Record receipt</option>
+      </select>
+    </div>
+
+    <div class="admin-page active" data-admin-view="overview">
+      <div class="admin-metrics">
+        <div class="stat-card"><span>Registered profiles</span><b id="adminUserCount">—</b></div>
+        <div class="stat-card"><span>Play records</span><b id="adminPlayCount">—</b></div>
+        <div class="stat-card"><span>Funding records</span><b id="adminFundingCount">—</b></div>
+      </div>
+      <div class="admin-panel"><h3>Admin overview</h3><p>Use the tabs above to open registered users, play records, transactions, funding records, or the receipt form separately.</p><p>All wallet credits shown here are demo credits. A saved funding receipt is a manual record only and does not change a user's balance.</p></div>
+    </div>
+
+    <div class="admin-page" data-admin-view="users">
+      <div class="admin-panel"><h3>Registered profiles</h3><div class="admin-table-wrap"><table><thead><tr><th>Name</th><th>User ID</th><th>Demo balance</th><th>Plays</th><th>Demo prizes</th><th>Joined</th></tr></thead><tbody id="adminUserRows"><tr><td colspan="6">No data loaded.</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="admin-page" data-admin-view="plays">
+      <div class="admin-panel"><h3>Play history</h3><div class="admin-table-wrap"><table><thead><tr><th>Date</th><th>User ID</th><th>Card</th><th>Demo prize</th></tr></thead><tbody id="adminPlayRows"><tr><td colspan="4">No data loaded.</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="admin-page" data-admin-view="transactions">
+      <div class="admin-panel"><h3>Wallet transaction history</h3><div class="admin-table-wrap"><table><thead><tr><th>Date</th><th>User ID</th><th>Type</th><th>Amount</th><th>Status</th><th>Reference</th></tr></thead><tbody id="adminTransactionRows"><tr><td colspan="6">No data loaded.</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="admin-page" data-admin-view="funding">
+      <div class="admin-panel"><h3>Funding records</h3><p>Review recorded receipts and update their review status.</p><div class="admin-table-wrap"><table><thead><tr><th>Date</th><th>User email</th><th>Phone</th><th>Amount</th><th>Receipt</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminFundingRows"><tr><td colspan="7">No records loaded.</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="admin-page" data-admin-view="receipt">
+      <div class="admin-panel">
+        <h3>Record a funding receipt</h3>
+        <form id="fundingRecordForm" class="admin-form">
+          <label for="fundingEmail">ScratchKE user email</label><input id="fundingEmail" type="email" required placeholder="user@example.com">
+          <label for="fundingPhone">M-Pesa phone (optional)</label><input id="fundingPhone" type="text" placeholder="07xx xxx xxx">
+          <label for="fundingAmount">Amount (KSh)</label><input id="fundingAmount" type="number" min="1" step="0.01" required placeholder="e.g. 500">
+          <label for="fundingReference">M-Pesa receipt/reference</label><input id="fundingReference" type="text" required placeholder="e.g. QWE123ABC">
+          <label for="fundingStatus">Initial status</label><select id="fundingStatus"><option value="pending">Pending review</option><option value="verified">Verified (checked independently)</option><option value="rejected">Rejected</option></select>
+          <label for="fundingNotes">Notes (optional)</label><textarea id="fundingNotes" rows="2" placeholder="Internal note"></textarea>
+          <button class="primary-btn" type="submit">Save funding record</button>
+        </form>
+        <p id="fundingFormMessage" class="form-message" aria-live="polite"></p>
+      </div>
+    </div>
+    <button id="closeAdminDashboard" class="secondary-btn" type="button">Return to ScratchKE</button>
+  </section>
+
+  <footer>ScratchKE • Prototype / demo only • Virtual credits have no cash value</footer>
+
+  <!-- Authentication dialog: hidden until the header button is pressed -->
+  <div id="auth" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-box">
+      <button id="authCloseBtn" class="dialog-close" type="button" aria-label="Close login dialog">×</button>
+      <div class="brand auth-brand"><b class="brand-mark">S</b><span><strong>ScratchKE</strong><small>Welcome to the demo</small></span></div>
+
+      <section id="loginPanel" class="auth-panel">
+        <label class="eyebrow">WELCOME BACK</label><h2 id="authTitle">Login</h2><p>Log in to play cards and save your demo results.</p>
+        <form id="loginForm">
+          <label for="loginEmail">Email address</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+          <label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Your password">
+          <button id="forgotPasswordBtn" class="text-btn forgot-btn" type="button">Forgot password?</button>
+          <button class="primary-btn full-width" id="loginBtn" type="submit">Login</button>
+        </form>
+        <p class="switch-line">Don't have an account? <button id="showRegister" class="text-btn" type="button">Create account</button></p>
+        <div id="loginMessage" class="form-message" aria-live="polite"></div>
+      </section>
+
+      <section id="registerPanel" class="auth-panel hidden">
+        <label class="eyebrow">JOIN SCRATCHKE</label><h2>Create account</h2><p>Create a demo account to play and track your results.</p>
+        <form id="registerForm">
+          <label for="registerName">Full name</label><input id="registerName" type="text" autocomplete="name" required placeholder="Full name">
+          <label for="registerEmail">Email address</label><input id="registerEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+          <label for="registerPassword">Password</label><input id="registerPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="At least 6 characters">
+          <label for="registerConfirm">Confirm password</label><input id="registerConfirm" type="password" autocomplete="new-password" minlength="6" required placeholder="Repeat password">
+          <label for="registerReferral">Referral code <span class="optional-label">(optional)</span></label><input id="registerReferral" type="text" placeholder="Referral code">
+          <button class="primary-btn full-width" id="registerBtn" type="submit">Create account</button>
+        </form>
+        <p class="switch-line">Already registered? <button id="showLogin" class="text-btn" type="button">Login</button></p>
+        <div id="registerMessage" class="form-message" aria-live="polite"></div>
+      </section>
+
+      <section id="forgotPanel" class="auth-panel hidden">
+        <label class="eyebrow">ACCOUNT RECOVERY</label><h2>Reset password</h2><p>Enter your email and we’ll send a reset link if the account exists.</p>
+        <form id="forgotForm"><label for="forgotEmail">Email address</label><input id="forgotEmail" type="email" autocomplete="email" required placeholder="you@example.com"><button class="primary-btn full-width" type="submit">Send reset link</button></form>
+        <p class="switch-line"><button id="forgotBackBtn" class="text-btn" type="button">Back to login</button></p>
+        <div id="forgotMessage" class="form-message" aria-live="polite"></div>
+      </section>
+
+      <section id="resetPasswordPanel" class="auth-panel hidden">
+        <label class="eyebrow">RESET PASSWORD</label><h2>Choose a new password</h2>
+        <form id="resetPasswordForm"><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="6" required><label for="confirmNewPassword">Confirm new password</label><input id="confirmNewPassword" type="password" autocomplete="new-password" minlength="6" required><button class="primary-btn full-width" id="resetPasswordBtn" type="submit">Update password</button></form>
+        <div id="resetPasswordMessage" class="form-message" aria-live="polite"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Scratch card dialog -->
+  <div id="modal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="title">
+    <div class="scratch-dialog">
+      <button id="close" class="dialog-close" type="button" aria-label="Close scratch card">×</button>
+      <label class="eyebrow">SCRATCHKE CARD</label><h2 id="title">Bronze card</h2><p id="sub" class="scratch-subtitle"></p>
+      <div class="scratch-surface" id="scratchSurface">
+        <div id="prize" class="prize-reveal">KSh 0</div>
+        <canvas id="canvas" aria-label="Scratch the card to reveal the demo prize"></canvas>
+      </div>
+      <p class="scratch-instruction">Use your finger or mouse to scratch the surface.</p>
+      <div id="result" class="scratch-result" aria-live="polite">Scratch the card to reveal your demo prize.</div>
+      <button id="again" class="primary-btn full-width" type="button" disabled>Play another card</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
