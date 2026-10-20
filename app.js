@@ -161,7 +161,7 @@ function renderCards() {
 
   Object.entries(cards).forEach(([name, card]) => {
     const article = document.createElement('article');
-    article.className = `scratch-card ${card.ticketStyle}`;
+    article.className = `scratch-card ${card.tier} ${card.ticketStyle}`;
     article.setAttribute(
       'aria-label',
       `Scratch ticket costing KSh ${money(card.cost)}`
