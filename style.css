@@ -58,21 +58,77 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   box-shadow:0 12px 28px #0005;
   transition:transform .2s,filter .2s;
 }
-.scratch-card::before{content:"";position:absolute;z-index:-1;inset:7px;border:1px solid #ffffffa8;border-radius:5px;pointer-events:none}
-.scratch-card::after{content:"✦  ★  ✿  ★  ✦  ✿  ★  ✦";position:absolute;z-index:-1;top:0;right:0;left:0;padding:4px 8px;color:#ffffff22;font-size:15px;letter-spacing:5px;text-align:right;pointer-events:none}
-.scratch-card:hover{transform:translateY(-3px);filter:brightness(1.06)}
-.scratch-card.bronze{background:radial-gradient(circle at 85% 10%,#b97e4a40,transparent 38%),linear-gradient(145deg,#183b2a,#0b1d14)}
-.scratch-card.silver{background:radial-gradient(circle at 85% 10%,#c3d3cc30,transparent 38%),linear-gradient(145deg,#26352d,#101b15)}
-.scratch-card.gold{background:radial-gradient(circle at 85% 10%,#e9bd5540,transparent 38%),linear-gradient(145deg,#453417,#1c170c)}
-.card-topline{display:flex;align-items:center;justify-content:space-between;gap:10px}.card-tier{font-size:10px;font-weight:950;letter-spacing:1.5px;text-transform:uppercase;color:#c4d6cb}
-.card-coin{width:40px;height:40px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;border:1px solid #ffffff30;background:#ffffff0b;font-size:21px}
-.scratch-card h3{font-size:25px;line-height:1.15;letter-spacing:-.7px;margin:7px 0 4px}.scratch-card p{margin:0;color:#a8beb1;font-size:12px;line-height:1.4}
-.card-prize{margin-top:8px;color:#e9f5ed;font-size:11px}.card-prize strong{color:var(--lime);font-size:15px}
-.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}.card-price{font-weight:850;font-size:14px}
-.primary-btn{border:0;border-radius:11px;background:var(--lime);color:#07120d;font-weight:950;padding:12px 15px;transition:transform .18s,filter .18s}.primary-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.card-play-btn{white-space:nowrap;min-width:105px}
-.card-notice{font-size:12px;color:#819a8d;margin:16px 0 0}
-.pool-indicator{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;text-align:right}.pool-indicator>span:first-child{font-size:11px;color:#91a99c}.pool-indicator>strong{font-size:14px;color:var(--lime);font-variant-numeric:tabular-nums}.virtual-tag{font-size:9px}
 
+/* Premium scratch-ticket artwork */
+.scratch-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 8px;
+  border: 1px dashed #ffffff75;
+  border-radius: 11px;
+  pointer-events: none;
+}
+
+.scratch-card::after {
+  content: "✦  ★  ✦  ★  ✦  ★  ✦";
+  position: absolute;
+  z-index: -1;
+  top: 12px;
+  right: 16px;
+  color: #ffffff25;
+  font-size: 18px;
+  letter-spacing: 5px;
+  pointer-events: none;
+}
+
+.scratch-card.bronze {
+  color: #fff3e6;
+  border: 1px solid #cd8959;
+  background:
+    radial-gradient(ellipse at 100% 0%, #f7c18b70, transparent 42%),
+    repeating-linear-gradient(
+      135deg,
+      #ffffff06 0px,
+      #ffffff06 2px,
+      transparent 2px,
+      transparent 9px
+    ),
+    linear-gradient(145deg, #8d4c2b 0%, #542b20 48%, #261713 100%);
+  box-shadow: 0 12px 28px #0006, inset 0 1px 0 #ffffff40;
+}
+
+.scratch-card.silver {
+  color: #ffffff;
+  border: 1px solid #d8e4e8;
+  background:
+    radial-gradient(ellipse at 100% 0%, #ffffff90, transparent 42%),
+    repeating-linear-gradient(
+      135deg,
+      #ffffff0b 0px,
+      #ffffff0b 2px,
+      transparent 2px,
+      transparent 9px
+    ),
+    linear-gradient(145deg, #647581 0%, #34434e 48%, #17232c 100%);
+  box-shadow: 0 12px 28px #0006, inset 0 1px 0 #ffffff65;
+}
+
+.scratch-card.gold {
+  color: #fff8dc;
+  border: 1px solid #f3d27b;
+  background:
+    radial-gradient(ellipse at 100% 0%, #ffe9a880, transparent 42%),
+    repeating-linear-gradient(
+      135deg,
+      #ffffff08 0px,
+      #ffffff08 2px,
+      transparent 2px,
+      transparent 9px
+    ),
+    linear-gradient(145deg, #a97a19 0%, #68460d 48%, #2b200b 100%);
+  box-shadow: 0 12px 28px #0006, inset 0 1px 0 #fff2bc65;
+}
 /* Account dropdown and balance */
 .dashboard-strip{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,1fr);align-items:start;gap:16px;padding-top:22px;padding-bottom:18px}
 .account-menu{position:relative;z-index:6;min-width:0}.account-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid #315344;border-radius:13px;background:#0b2117;color:#e1f1e7;font-size:14px;font-weight:850}
