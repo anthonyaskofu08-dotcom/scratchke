@@ -986,3 +986,235 @@ a:focus-visible {
     padding: 25px 0 40px;
   }
     }
+/* SCRATCHKE V2 — landscape ticket layout */
+.cards-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.scratch-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1.65 / 1;
+  padding: 22px 18px;
+  border-radius: 16px;
+}
+
+/* Keep the ticket information on the left */
+.scratch-card .ticket-topline {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 5px;
+  padding-right: 38%;
+  position: relative;
+  z-index: 1;
+}
+
+.scratch-card .ticket-main {
+  grid-column: 1;
+  grid-row: 2;
+  width: 60%;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+}
+
+.scratch-card .ticket-main h3 {
+  font-size: clamp(18px, 2.1vw, 26px);
+  line-height: 1.12;
+}
+
+.scratch-card .ticket-promo {
+  font-size: 11px;
+}
+
+.scratch-card .ticket-prize-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+/* Keep the price and action clearly visible */
+.scratch-card .ticket-bottom {
+  grid-column: 1;
+  grid-row: 3;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 0;
+  padding-bottom: 7px;
+}
+
+.scratch-card .ticket-price {
+  font-size: 11px;
+}
+
+.scratch-card .ticket-play-btn {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 11px;
+}
+
+/* Metallic scratch-off panel: decorative ticket artwork */
+.scratch-card::after {
+  content: "✦  SCRATCH HERE  ✦";
+  position: absolute;
+  z-index: 0;
+  top: 27%;
+  right: 6%;
+  left: auto;
+  width: 32%;
+  height: 39%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  overflow: hidden;
+  border: 3px solid #ffffffa8;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #ffffff40 0px,
+      #ffffff40 2px,
+      transparent 2px,
+      transparent 6px
+    ),
+    linear-gradient(145deg, #f2f2ec, #aeb8b2 45%, #e8e9e4 65%, #89958e);
+  box-shadow:
+    inset 0 0 0 2px #58665e55,
+    0 5px 12px #0005;
+  color: #26372c;
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.scratch-card.bronze {
+  background:
+    radial-gradient(circle at 95% 15%, #f5bd7b55, transparent 42%),
+    linear-gradient(135deg, #874927, #4a261b 72%, #28160f);
+}
+
+.scratch-card.silver {
+  background:
+    radial-gradient(circle at 95% 15%, #e8f3f555, transparent 42%),
+    linear-gradient(135deg, #607987, #2d414d 72%, #18242c);
+}
+
+.scratch-card.gold {
+  background:
+    radial-gradient(circle at 95% 15%, #ffe59b66, transparent 42%),
+    linear-gradient(135deg, #a77a1c, #64450f 72%, #302108);
+}
+
+/* Landscape tickets on phones too */
+@media (max-width: 640px) {
+  .cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .scratch-card {
+    aspect-ratio: 1.65 / 1;
+    min-height: 0;
+    padding: 17px 14px;
+    gap: 7px;
+  }
+
+  .scratch-card .ticket-topline {
+    padding-right: 38%;
+    margin-top: 3px;
+  }
+
+  .scratch-card .ticket-brand {
+    font-size: 12px;
+  }
+
+  .scratch-card .ticket-main {
+    width: 60%;
+  }
+
+  .scratch-card .ticket-main h3 {
+    font-size: clamp(17px, 5vw, 23px);
+  }
+
+  .scratch-card .ticket-promo {
+    font-size: 10px;
+  }
+
+  .scratch-card .ticket-prize-label {
+    display: flex;
+    margin-top: 5px;
+  }
+
+  .scratch-card .ticket-prize-label span {
+    font-size: 8px;
+  }
+
+  .scratch-card .ticket-prize-label strong {
+    font-size: 13px;
+  }
+
+  .scratch-card .ticket-bottom {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 5px;
+  }
+
+  .scratch-card .ticket-price {
+    font-size: 10px;
+  }
+
+  .scratch-card .ticket-price strong {
+    font-size: 12px;
+  }
+
+  .scratch-card .ticket-play-btn {
+    width: auto;
+    min-width: 95px;
+    min-height: 34px;
+    padding: 7px 9px;
+    font-size: 10px;
+  }
+
+  .scratch-card::after {
+    top: 28%;
+    right: 5%;
+    width: 33%;
+    height: 36%;
+    padding: 4px;
+    font-size: 8px;
+    letter-spacing: .5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .scratch-card {
+    padding: 14px 10px;
+  }
+
+  .scratch-card .ticket-main {
+    width: 62%;
+  }
+
+  .scratch-card .ticket-play-btn {
+    min-width: 84px;
+    padding-inline: 6px;
+  }
+}
