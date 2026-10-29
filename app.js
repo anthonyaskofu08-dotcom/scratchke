@@ -14,7 +14,7 @@ function money(value) {
 
 const SUPABASE_URL = 'https://ahatbnwqcozjzxehcnjc.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_NFltu0VR5bo6K097P6-gSw_XWxnPLVl';
-const MPESA_API_BASE = 'https://scratchke-backend.netlify.app';
+const MPESA_API_BASE = 'https://scratchke-backed.netlify.app';
 const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const cards = {
