@@ -297,7 +297,7 @@ async function ensureProfileForUser(user, name = '') {
         user.user_metadata?.name ||
         user.email?.split('@')[0] ||
         'Player',
-      balance: 500,
+            balance: 0,
       played: 0,
       won: 0,
       best: 0
