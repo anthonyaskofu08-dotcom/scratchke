@@ -903,11 +903,10 @@ async function revealCard() {
   isDrawing = false;
   lastPoint = null;
 
-  $('result').textContent =
+   $('result').textContent =
     pendingPrize > 0
-      ? `🎉 You revealed KSh ${money(pendingPrize)} in demo credits!`
+      ? `🎉 You won KSh ${money(pendingPrize)}!`
       : 'No prize this time. Your ticket has been recorded.';
-
   $('prize').classList.add('prize-celebrate');
   $('again').disabled = false;
 
