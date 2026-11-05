@@ -139,7 +139,7 @@ function updateHeader() {
   if ($('walletHint')) {
     $('walletHint').textContent = loggedIn
 ? 'Your wallet balance and transactions.'
-      : 'Log in to access your demo wallet.';
+     : 'Log in to access your wallet.';
   }
 
   if ($('cardNotice')) {
