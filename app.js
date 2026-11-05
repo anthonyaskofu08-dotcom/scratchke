@@ -1033,65 +1033,6 @@ $('depositBtn')?.addEventListener('click', async () => {
   }
 });
 
-$('withdrawBtn')?.addEventListener('click', async () => {
-  if (!currentUser) {
-    showAuth('login');
-    return;
-  }
-
-  const amount = Number($('withdrawAmount')?.value);
-
-  if (
-    !Number.isFinite(amount) ||
-    amount <= 0 ||
-    amount > 1000000
-  ) {
-    setMessage(
-      'walletMessage',
-      'Enter a valid amount between KSh 0.01 and KSh 1,000,000.',
-      true
-    );
-    return;
-  }
-
-  try {
-    const { data, error } = await supabaseClient.rpc(
-      'remove_demo_credits',
-      { p_amount: amount }
-    );
-
-    if (error) throw error;
-
-    if (data !== true) {
-      setMessage(
-        'walletMessage',
-        'Insufficient demo credits.',
-        true
-      );
-      return;
-    }
-
-    $('withdrawAmount').value = '';
-
-    setMessage(
-      'walletMessage',
-      `Removed KSh ${money(amount)} in demo credits. No real withdrawal was made.`
-    );
-
-    await getProfile();
-    await renderAccountData();
-  } catch (error) {
-    console.error('Demo credit removal error:', error);
-
-    setMessage(
-      'walletMessage',
-      `Could not remove demo credits: ${error.message}`,
-      true
-    );
-  }
-});
-
-
 /* =========================
    PLAY HISTORY
    ========================= */
