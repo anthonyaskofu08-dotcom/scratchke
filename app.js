@@ -620,6 +620,11 @@ async function openCard(cardName) {
   const card = cards[cardName];
   if (!card) return;
 
+  if (pendingGameRequestId && pendingGameRequestCard !== cardName) {
+    alert('Please retry your previous card first so you are not charged twice.');
+    return;
+  }
+
   await getProfile();
 
   if (!profile) {
@@ -627,44 +632,68 @@ async function openCard(cardName) {
     return;
   }
 
-  if (Number(profile.balance || 0) < card.cost) {
-    alert('Insufficient demo credits. Use the demo wallet to add virtual credits.');
+  if (!pendingGameRequestId) {
+    pendingGameRequestId = crypto.randomUUID();
+    pendingGameRequestCard = cardName;
+  }
+
+  let gameResponse;
+
+  try {
+    const { data: { session }, error: sessionError } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError || !session?.access_token) {
+      alert('Your session has expired. Please log in again.');
+      return;
+    }
+
+    const response = await fetch(`${MPESA_API_BASE}/api/play`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({
+        card: cardName,
+        requestId: pendingGameRequestId
+      })
+    });
+
+    gameResponse = await response.json();
+
+    if (!response.ok || !gameResponse?.success) {
+      if (response.status >= 400 && response.status < 500) {
+        pendingGameRequestId = null;
+        pendingGameRequestCard = null;
+      }
+
+      alert(
+        gameResponse?.error ||
+        'Unable to start the card. Please try again.'
+      );
+      return;
+    }
+  } catch (error) {
+    console.error('Secure game request failed:', error);
+    alert('Connection problem. Please retry the same card.');
     return;
   }
 
-  const newBalance = Number(profile.balance || 0) - card.cost;
-  const newPlayed = Number(profile.played || 0) + 1;
+  pendingGameRequestId = null;
+  pendingGameRequestCard = null;
 
-  const { error } = await supabaseClient
-    .from('profiles')
-    .update({
-      balance: newBalance,
-      played: newPlayed
-    })
-    .eq('id', currentUser.id);
-
-  if (error) {
-    console.error('Ticket charge failed:', error);
-    alert('Unable to start the card. Please try again.');
-    return;
-  }
-
-  profile.balance = newBalance;
-  profile.played = newPlayed;
+  profile.balance = Number(gameResponse.balance);
+  profile.played = Number(gameResponse.played);
+  profile.won = Number(gameResponse.won);
+  profile.best = Number(gameResponse.best);
 
   activeCardName = cardName;
-  pendingPrize = 0;
+  pendingPrize = Number(gameResponse.prize || 0);
   revealLocked = false;
   isDrawing = false;
   lastPoint = null;
   scratchedPoints = 0;
-
-  const pool = await getPrizePool();
-
-  pendingPrize = selectAffordablePrize(
-    card,
-    Number(pool?.available_pool || 0)
-  );
 
   $('title').textContent =
     `ScratchKE ticket — KSh ${money(card.cost)}`;
