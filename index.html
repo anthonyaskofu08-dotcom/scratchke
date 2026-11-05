@@ -100,49 +100,13 @@
                   </p>
                 </div>
               </details>
-
-              <!-- WITHDRAW -->
-              <details class="wallet-action-dropdown" id="withdrawDropdown">
-                <summary>
-                  <span>Withdraw</span>
-                  <span aria-hidden="true">−</span>
-                </summary>
-
-                <div class="wallet-action-content">
-                  <label for="withdrawAmount">Amount (KSh)</label>
-                  <input
-                    type="number"
-                    id="withdrawAmount"
-                    min="1"
-                    step="1"
-                    inputmode="numeric"
-                    placeholder="e.g. 100"
-                  >
-
-                  <button
-                    id="withdrawBtn"
-                    type="button"
-                    class="secondary-btn full-width"
-                  >
-                    Remove demo credits
-                  </button>
-
-                  <p class="wallet-disclaimer">
-                    Demo only. No money is sent to M-Pesa.
-                  </p>
-                </div>
-              </details>
-
-              <p id="walletMessage" class="inline-message" aria-live="polite"></p>
+                            <p id="walletMessage" class="inline-message" aria-live="polite"></p>
             </div>
           </details>
-
-          <button id="reset" class="reset-btn" type="button">
-            Reset demo account
-          </button>
         </div>
       </details>
 
+    
       <aside class="wallet-card balance-card" id="walletCard">
         <div class="wallet-label">YOUR ACCOUNT BALANCE</div>
         <strong id="balance">KSh 500</strong>
