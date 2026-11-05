@@ -138,7 +138,7 @@ function updateHeader() {
 
   if ($('walletHint')) {
     $('walletHint').textContent = loggedIn
-      ? 'Virtual demo credits only.'
+? 'Your wallet balance and transactions.'
       : 'Log in to access your demo wallet.';
   }
 
