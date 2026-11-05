@@ -1091,39 +1091,6 @@ $('withdrawBtn')?.addEventListener('click', async () => {
   }
 });
 
-$('reset')?.addEventListener('click', async () => {
-  if (!currentUser) {
-    showAuth('login');
-    return;
-  }
-
-  if (!window.confirm(
-    'Reset your demo balance and statistics to the starting values? This will not reset the shared prize pool.'
-  )) return;
-
-  const { error } = await supabaseClient
-    .from('profiles')
-    .update({
-      balance: 500,
-      played: 0,
-      won: 0,
-      best: 0
-    })
-    .eq('id', currentUser.id);
-
-  if (error) {
-    alert(`Could not reset demo account: ${error.message}`);
-    return;
-  }
-
-  await getProfile();
-  await renderAccountData();
-
-  setMessage(
-    'walletMessage',
-    'Demo account reset to KSh 500.'
-  );
-});
 
 /* =========================
    PLAY HISTORY
