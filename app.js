@@ -929,9 +929,8 @@ $('again')?.addEventListener('click', async () => {
 });
 
 /* =========================
-   DEMO WALLET
+   M-PESA WALLET
    ========================= */
-
 $('depositBtn')?.addEventListener('click', async () => {
   if (!currentUser) {
     showAuth('login');
