@@ -918,71 +918,16 @@ async function revealCard() {
   isDrawing = false;
   lastPoint = null;
 
-  if (pendingPrize <= 0) {
-    await recordPlay(activeCardName, 0);
-
-    $('result').textContent =
-      'No prize this time. Your ticket has been recorded.';
-
-    $('again').disabled = false;
-    await renderAccountData();
-    return;
-  }
-
-  // The database function must deduct the pool, credit the wallet,
-  // update statistics and record the play transactionally.
-  let award = await supabaseClient.rpc('award_prize', {
-    p_prize_amount: Number(pendingPrize),
-    p_card_name: activeCardName
-  });
-
-  if (award.error || award.data !== true) {
-    console.warn(
-      'Prize award failed; refreshing the shared pool.',
-      award.error
-    );
-
-    const pool = await getPrizePool();
-
-    const alternative = selectAffordablePrize(
-      cards[activeCardName],
-      Number(pool?.available_pool || 0)
-    );
-
-    if (alternative > 0) {
-      pendingPrize = alternative;
-
-      award = await supabaseClient.rpc('award_prize', {
-        p_prize_amount: Number(pendingPrize),
-        p_card_name: activeCardName
-      });
-    }
-  }
-
-  if (award.error || award.data !== true) {
-    console.error('Could not award demo prize:', award.error);
-
-    pendingPrize = 0;
-
-    await recordPlay(activeCardName, 0);
-
-    $('result').textContent =
-      'The prize pool changed before the prize could be awarded. No prize was paid.';
-
-    $('again').disabled = false;
-    await renderAccountData();
-    return;
-  }
-
-  await getProfile();
-
   $('result').textContent =
-    `🎉 You revealed KSh ${money(pendingPrize)} in demo credits!`;
+    pendingPrize > 0
+      ? `🎉 You revealed KSh ${money(pendingPrize)} in demo credits!`
+      : 'No prize this time. Your ticket has been recorded.';
 
   $('prize').classList.add('prize-celebrate');
   $('again').disabled = false;
 
   await renderAccountData();
+}
 }
 
 function closeScratchModal() {
