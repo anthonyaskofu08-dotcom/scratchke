@@ -278,19 +278,6 @@ async function getPrizePool() {
   return data;
 }
 
-function selectAffordablePrize(card, availablePool) {
-  const affordable = card.prizes.filter(
-    prize =>
-      Number(prize) <= Math.max(0, Number(availablePool) || 0)
-  );
-
-  if (!affordable.length) return 0;
-
-  return Number(
-    affordable[Math.floor(Math.random() * affordable.length)] || 0
-  );
-}
-
 async function ensureProfileForUser(user, name = '') {
   const { data, error } = await supabaseClient
     .from('profiles')
