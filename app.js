@@ -928,7 +928,6 @@ async function revealCard() {
 
   await renderAccountData();
 }
-}
 
 function closeScratchModal() {
   $('modal')?.classList.add('hidden');
