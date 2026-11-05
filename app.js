@@ -702,12 +702,8 @@ async function openCard(cardName) {
       `linear-gradient(135deg, ${palette[0]}, ${palette[1]})`;
   }
 
-  $('prize').innerHTML =
-    `<small>DEMO PRIZE</small>KSh ${money(pendingPrize)}`;
-
-  $('result').textContent =
-    'Scratch the card to reveal your demo prize.';
-
+ $('prize').innerHTML =
+  `<small>YOUR PRIZE</small>KSh ${money(pendingPrize)}`;
   $('again').disabled = true;
 
   $('modal')?.classList.remove('hidden');
