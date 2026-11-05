@@ -1,4 +1,4 @@
-/* ScratchKE V2 — front-end demo. Never use client-side prize logic for real-money play. */
+
 'use strict';
 
 function $(id) {
