@@ -144,7 +144,7 @@ function updateHeader() {
 
   if ($('cardNotice')) {
     $('cardNotice').textContent = loggedIn
-      ? 'Your plays and results are saved to your demo account.'
+      ? 'Your plays and results are saved to your account.'
       : 'You can browse cards without an account. Log in or register to play.';
   }
 
