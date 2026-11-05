@@ -138,7 +138,7 @@ function updateHeader() {
 
   if ($('walletHint')) {
     $('walletHint').textContent = loggedIn
-? 'Your wallet balance and transactions.'
+    ? 'Your wallet balance and transactions.'
      : 'Log in to access your wallet.';
   }
 
