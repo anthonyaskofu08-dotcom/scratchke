@@ -704,6 +704,8 @@ async function openCard(cardName) {
 
  $('prize').innerHTML =
   `<small>YOUR PRIZE</small>KSh ${money(pendingPrize)}`;
+    $('result').textContent =
+    'Scratch the card to reveal your prize.';
   $('again').disabled = true;
 
   $('modal')?.classList.remove('hidden');
