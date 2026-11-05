@@ -257,25 +257,13 @@ async function getProfile() {
 }
 
 async function getPrizePool() {
-  if (!supabaseClient) return null;
+  const poolDisplay = $('availablePool');
 
-  const { data, error } = await supabaseClient
-    .from('prize_pool')
-    .select('*')
-    .eq('id', 1)
-    .maybeSingle();
-
-  if (error) {
-    console.error('Prize pool fetch failed:', error);
-    return null;
+  if (poolDisplay) {
+    poolDisplay.textContent = 'Private';
   }
 
-  if ($('availablePool')) {
-    $('availablePool').textContent =
-      `KSh ${money(data?.available_pool || 0)}`;
-  }
-
-  return data;
+  return null;
 }
 
 async function ensureProfileForUser(user, name = '') {
