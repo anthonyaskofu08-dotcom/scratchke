@@ -880,21 +880,6 @@ canvas?.addEventListener('pointermove', event => {
   });
 });
 
-async function recordPlay(cardName, prize) {
-  if (!currentUser) return;
-
-  const { error } = await supabaseClient
-    .from('plays')
-    .insert({
-      user_id: currentUser.id,
-      card: cardName,
-      prize: Number(prize || 0)
-    });
-
-  if (error) {
-    console.error('Could not save play history:', error);
-  }
-}
 
 async function revealCard() {
   if (revealLocked || !activeCardName || !currentUser) return;
